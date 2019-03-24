@@ -4,7 +4,6 @@
     <router-view></router-view>
   </div>
 </template>
-
 <script>
 export default {
   name: 'app',
@@ -13,8 +12,7 @@ export default {
   }
 }
 </script>
-
-<style>
+<style scoped>
   .app {
     height: 100%;
   }

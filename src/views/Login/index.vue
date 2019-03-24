@@ -2,13 +2,26 @@
   <div class="login-wrap">
     <div class="login-container">
       <!--
+        el-form 表单组件
+          label-position 设定label的方向
+            left/top/right
+        配置表单验证
+          1. 为el-from组件添加:rules=“rules” 验证规则
+          2. 为el-from-item组件添加 prop 验证的子段
+          3. 提交表单的时候获取表单的验证状态（验证通过或者验证失败），根据成功与否进行提交表为
+              el-from 添加ref = "loginForm"
 
       -->
-      <el-form label-position="top" label-width="80px" :model="loginForm">
-        <el-form-item label="用户名">
+      <el-form
+        label-position="top"
+        :rules="loginFormRules"
+        label-width="80px"
+        :model="loginForm"
+        ref="loginFormEl">
+        <el-form-item label="用户名" prop="username">
           <el-input v-model="loginForm.username"></el-input>
         </el-form-item>
-        <el-form-item label="密码">
+        <el-form-item label="密码" prop="password">
           <el-input v-model="loginForm.password"></el-input>
         </el-form-item>
         <el-form-item>
@@ -20,32 +33,53 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
-  name: 'Login',
-  data () {
+  name: "Login",
+  data() {
     return {
       loginForm: {
         username: "",
-        password: "",
+        password: ""
+      },
+      loginFormRules: {
+        username: [
+          { required: true, message: "请输用户名", trigger: "blur" }
+        ],
+        password: [
+          { required: true, message: "请输密码", trigger: "blur" }
+        ]
       }
     };
   },
   methods: {
-    async onSubmit() {
-      const resData = await axios.post('http://localhost:8888/api/private/v1/login',this.loginForm)
-      // const { meta } = resData.data
-      // if (meta.status === 200) {
-      //   this.$message({
-      //     message: '登录成功',
-      //     type: 'success'
-      //   })
-      //   this.$router.replace('/')
-      // } else {
-      //   console.log(resData)
-      //   this.$message.error('登录失败');
-      // }
-      console.log(resData)
+    async onSubmit () {
+      this.$refs.loginFormEl.validate(valid => {
+        // valid是一个布尔值
+        if (valid) {
+          this.login()
+        } else {
+          return false
+        }
+      })
+    },
+    async login () {
+      const resData = await axios.post(
+        "http://localhost:8888/api/private/v1/login",
+        this.loginForm
+      );
+      const { meta } = resData.data;
+      if (meta.status === 200) {
+        this.$message({
+          message: "登录成功",
+          type: "success"
+        });
+        this.$router.replace("/");
+      } else {
+        console.log(resData);
+        this.$message.error("登录失败");
+      }
+      // console.log(resData)
     }
   }
 };

@@ -6,7 +6,7 @@
       </el-col>
       <el-col :span="16">黑马程序员</el-col>
       <el-col :span="4">
-        <a href="#">退出</a>
+        <el-button>退出</el-button>
       </el-col>
     </el-row>
     <el-container>
@@ -15,8 +15,7 @@
         <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
+
         >
           <el-submenu index="1">
             <template slot="title">
@@ -24,7 +23,12 @@
               <span>用户管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1">用户列表</el-menu-item>
+              <el-menu-item index="2-1">
+                <template slot="title">
+                  <i class="el-icon-info"></i>
+                  <span>用户列表</span>
+                </template>
+              </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="2">
@@ -35,10 +39,10 @@
             <el-menu-item-group>
               <el-menu-item index="2-1">
                 <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span> 角色列表</span>
+                  <i class="fas fa-address-book"></i>
+                  <span>角色列表</span>
                 </template>
-               </el-menu-item>
+              </el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group>
               <el-menu-item index="2-2">权限列表</el-menu-item>
@@ -55,11 +59,11 @@
             <el-menu-item-group>
               <el-menu-item index="3-2">分类参数</el-menu-item>
             </el-menu-item-group>
-             <el-menu-item-group>
+            <el-menu-item-group>
               <el-menu-item index="3-2">商品分类</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-           <el-submenu index="4">
+          <el-submenu index="4">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>订单管理</span>
@@ -77,31 +81,35 @@
               <el-menu-item index="5-1">数据报表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-
         </el-menu>
         <!-- 导航组件 -->
       </el-aside>
-      <el-main>Main</el-main>
+      <el-main>
+        <!-- Layout 的 children会显示到这里 -->
+        <router-view>
+
+        </router-view>
+      </el-main>
     </el-container>
   </div>
 </template>
 <script>
 export default {
   name: "Layout",
-  data() {},
+  data () {},
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    }
+    // handleOpen (key, keyPath) {
+    //   console.log(key, keyPath)
+    // },
+    // handleClose (key, keyPath) {
+    //   console.log(key, keyPath)
+    // }
   }
-};
+}
 </script>
 <style scoped>
 .app-header {
-  background-color: #545c64;
+  background-color: #545c60;
   display: flex;
   align-items: center;
 }

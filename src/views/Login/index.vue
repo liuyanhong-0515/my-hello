@@ -73,10 +73,11 @@ export default {
         this.$message({
           message: "登录成功",
           type: "success"
-        });
-        this.$router.replace("/");
+        })
+
+        this.$router.push
       } else {
-        console.log(resData);
+        // console.log(resData);
         this.$message.error("登录失败");
       }
       // console.log(resData)

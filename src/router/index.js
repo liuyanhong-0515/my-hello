@@ -23,6 +23,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  // 1
   // 我们可以在这里定制路由导航的
   // 如果路由路径是/login，则允许通过
     if (to.path === '/login') {

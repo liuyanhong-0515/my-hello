@@ -7,7 +7,7 @@ import Home from '@/views/Home'
 import UserList from '@/views/User'
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     { path:'/login',component:Login }, // 展示到App.Vue 的 router-view
     {
@@ -19,6 +19,25 @@ export default new Router({
         { path:'/users',component:UserList}
       ]
     },
-
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  // 我们可以在这里定制路由导航的
+  // 如果路由路径是/login，则允许通过
+    if (to.path === '/login') {
+      return next()
+    }
+  // 否则校验登录状态
+  const token = window.localStorage.getItem('token')
+  // 如果没有登录，就跳转到登录页
+  if (!token) {
+    return next('/login')
+  }
+  // 如果有 token ，则校验token的有效性
+  // token 是服务器签发生
+
+  // 如果登录成功
+  next()
+})
+export default  router

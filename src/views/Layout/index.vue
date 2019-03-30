@@ -1,114 +1,42 @@
 <template>
-  <div>
-    <el-row :gutter="20" class="app-header">
-      <el-col :span="4">
-        <img src="./logo.png" alt="黑马程序员">
-      </el-col>
-      <el-col :span="16">黑马程序员</el-col>
-      <el-col :span="4">
-        <el-button>退出</el-button>
-      </el-col>
-    </el-row>
+  <el-container>
+    <el-header>
+     <AppHeader></AppHeader>
+    </el-header>
     <el-container>
       <el-aside width="200px">
         <!-- 侧边栏 -->
-        <el-menu
-          default-active="2"
-          class="el-menu-vertical-demo"
-
-        >
-          <el-submenu index="1">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>用户管理</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="2-1">
-                <template slot="title">
-                  <i class="el-icon-info"></i>
-                  <span>用户列表</span>
-                </template>
-              </el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>权限管理</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="2-1">
-                <template slot="title">
-                  <i class="fas fa-address-book"></i>
-                  <span>角色列表</span>
-                </template>
-              </el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group>
-              <el-menu-item index="2-2">权限列表</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <el-submenu index="3">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>商品管理</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="3-1">商品列表</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group>
-              <el-menu-item index="3-2">分类参数</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group>
-              <el-menu-item index="3-2">商品分类</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <el-submenu index="4">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>订单管理</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="4-1">订单列表</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <el-submenu index="5">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>数据统计</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="5-1">数据报表</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-        </el-menu>
+        <NavMenu></NavMenu>
         <!-- 导航组件 -->
       </el-aside>
       <el-main>
         <!-- Layout 的 children会显示到这里 -->
-        <router-view>
-
-        </router-view>
+        <router-view></router-view>
       </el-main>
     </el-container>
-  </div>
+  </el-container>
 </template>
 <script>
+import AppHeader from './header.vue'
+import NavMenu from './aside.vue'
+
 export default {
   name: "Layout",
-  data () {},
-  methods: {
-    // handleOpen (key, keyPath) {
-    //   console.log(key, keyPath)
-    // },
-    // handleClose (key, keyPath) {
-    //   console.log(key, keyPath)
-    // }
+  data() {
+    return {}
+  },
+  methods: {},
+  components: {
+    AppHeader,
+    NavMenu
   }
-}
+};
 </script>
 <style scoped>
 .app-header {
+  /* width: 100%; */
+  margin: 0;
+  padding: 0;
   background-color: #545c60;
   display: flex;
   align-items: center;

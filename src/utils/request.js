@@ -4,6 +4,7 @@
  */
 import axios from 'axios'
 import router from '@/router'
+import { getToken } from '@/utils/auth'
 
 
 // axios 可以配置基础路径，这样的话就不需要每次请求的时候都写很多
@@ -24,11 +25,12 @@ const http = axios.create({
 // Add a requerst interceptor
 http.interceptors.request.use(function (config) {
   // 3
+  window.console.log('3请求拦截')
   // console.log('请求经过这里',config)
   // Do something before request is sent
 
   if (config.url !== '/login') {
-    config.headers.Authorization = window.localStorage.getItem('token')
+    config.headers.Authorization = getToken()
 
   }
   return config   //v请求通过的规则，如果不return config，则
@@ -45,6 +47,7 @@ http.interceptors.request.use(function (config) {
  */
 http.interceptors.response.use(function (response) {
   // 4
+  window.console.log('4.响应拦截')
   // Do something with response data
   if (response.data.meta.staus === 401) {
     router.replace('/login')

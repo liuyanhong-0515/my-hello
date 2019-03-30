@@ -18,6 +18,9 @@
         label-width="80px"
         :model="loginForm"
         ref="loginFormEl">
+        <el-form-item class="logo-img">
+          <img src="./love.jpg" alt="">
+        </el-form-item>
         <el-form-item label="用户名" prop="username">
           <el-input v-model="loginForm.username"></el-input>
         </el-form-item>
@@ -32,7 +35,8 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import { login } from '@/api'
+import { setToken } from '@/utils/auth'
 export default {
   name: "Login",
   data () {
@@ -52,7 +56,7 @@ export default {
     };
   },
   methods: {
-    async onSubmit () {
+    onSubmit () {
       this.$refs.loginFormEl.validate(valid => {
         // valid是一个布尔值
         if (valid) {
@@ -63,24 +67,19 @@ export default {
       })
     },
     async login () {
-      const resData = await axios.post(
-        "http://localhost:8888/api/private/v1/login",
-        this.loginForm
-      )
-      const { meta, data } = resData.data;
+      const { meta, data } = await login(this.loginForm)
       if (meta.status === 200) {
         this.$message({
           message: "登录成功",
           type: "success"
         })
         // 将用户名和密码交换到的身份
-        window.localStorage.setItem('token',data.token)
-        this.$router.replace("/")
-      } else {
-        // console.log(resData)
-        this.$message.error("登录失败")
+        setToken(data.token)
+        this.$router.push('/')
+      } else if (status === 400) {
+        this.$message.error(`登录失败 : ${meta.msg}`)
       }
-    },
+    }
   }
 };
 </script>
@@ -101,5 +100,19 @@ export default {
 }
 .login-btn {
   width: 100%;
+}
+.el-form {
+  position: relative;
+}
+.logo-img {
+  position: absolute;
+  left: 40%;
+  top: -120px;
+
+}
+.logo-img img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
 }
 </style>
